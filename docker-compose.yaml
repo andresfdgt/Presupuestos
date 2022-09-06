@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: recp
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: presupuestos
+    container_name: presupuestos-app
+    restart: unless-stopped
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    working_dir: /var/www/
+    ports:
+      - 8005:8000
+    volumes:
+      - ./:/var/www
+    networks:
+      - master
+
+networks:
+  master:
+    name: master
+    driver: bridge
